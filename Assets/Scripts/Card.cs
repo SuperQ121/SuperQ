@@ -12,7 +12,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [SerializeField] private bool instantiateVisual = true;
     private VisualCardsHandler visualHandler;
     private Vector3 offset;
-
+    
+    
     //NOTE::移动相关参数
     [Header("Movement")]
     [SerializeField] private float moveSpeedLimit = 50;//移动速度限制
@@ -20,7 +21,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     //NOTE::选择相关参数
     [Header("Selection")]
     public bool selected;//是否被选择
-    public float selectionOffset = 50;//选择后垂直偏移量
+    public float selectionOffset = 0;//选择后垂直偏移量
     private float pointerDownTime;//鼠标按下的时间
     private float pointerUpTime;//鼠标抬起的时间
 
@@ -167,10 +168,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         SelectEvent.Invoke(this, selected);
 
         //NOTE::如果物体被选中，将其位置向上偏移（selectionOffset）。如果物体未被选中，将其位置重置为 (0, 0, 0)。
-        if (selected)
+        /*if (selected)
             transform.localPosition += (cardVisual.transform.up * selectionOffset);
         else
-            transform.localPosition = Vector3.zero;
+            transform.localPosition = Vector3.zero;*/
     }
 
     //NOTE::卡牌位置上移

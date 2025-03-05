@@ -50,18 +50,19 @@ public class HorizontalCardHolder : MonoBehaviour
 
         StartCoroutine(Frame());
         
-    }
-    
-    IEnumerator Frame()
-    {
-        yield return new WaitForSecondsRealtime(.1f);
-        for (int i = 0; i < cards.Count; i++)
+        IEnumerator Frame()
         {
-            if (cards[i].cardVisual != null)
-                cards[i].cardVisual.UpdateIndex(transform.childCount);
-            //NOTE::设置卡牌图片索引为卡槽所在索引
+            yield return new WaitForSecondsRealtime(.1f);
+            for (int i = 0; i < cards.Count; i++)
+            {
+                if (cards[i].cardVisual != null)
+                    cards[i].cardVisual.UpdateIndex(transform.childCount);
+                //NOTE::设置卡牌图片索引为卡槽所在索引
+            }
         }
     }
+    
+    
     
 
     private void BeginDrag(Card card)
