@@ -12,7 +12,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [SerializeField] private bool instantiateVisual = true;
     private VisualCardsHandler visualHandler;
     private Vector3 offset;
-    
+    private HorizontalCardHolder cardGroup;//NOTE::卡牌所在卡牌区
+    private Transform useCardCheckPoint;//NOTE::释放卡牌检测点
+    [SerializeField]private CardInfo cardInfo;//NOTE::卡牌相关的信息，图案，名称，功能等
     
     //NOTE::移动相关参数
     [Header("Movement")]
@@ -49,7 +51,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         canvas = GetComponentInParent<Canvas>();
         imageComponent = GetComponent<Image>();
-        
+
+        useCardCheckPoint = CardManager.instance.useCardCheckPoint;
         //NOTE::是否已经初始化
         if (!instantiateVisual)
             return;
@@ -60,6 +63,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         //NOTE::生成卡牌图片放在VisualCardsHandler或画布节点下，同时获取CardVisual；在VisualCardsHandler节点下方便管理
         cardVisual = Instantiate(cardVisualPrefab, visualHandler ? visualHandler.transform : canvas.transform).GetComponent<CardVisual>();
         cardVisual.Initialize(this);
+        cardGroup=transform.parent.parent.GetComponent<HorizontalCardHolder>();
     }
 
     
@@ -118,6 +122,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         {
             yield return new WaitForEndOfFrame();
             wasDragged = false;
+        }
+
+        if (transform.position.x>useCardCheckPoint.position.x
+            && transform.position.y > useCardCheckPoint.position.y)
+        {
+            cardInfo.CardFuction();
+            Destroy(transform.parent.gameObject);
+            cardGroup.cards.Remove(this);
         }
     }
 
