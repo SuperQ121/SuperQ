@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
         
         if (stat.currentHealth <= 0)
         {
+            PlayerManager.instance.isDie=true;
+            GameManager.instance.EndGame();
             Destroy(gameObject);
             Debug.Log("玩家死亡");
         }

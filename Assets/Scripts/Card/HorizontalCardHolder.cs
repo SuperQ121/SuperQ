@@ -47,24 +47,47 @@ public class HorizontalCardHolder : MonoBehaviour
             card.name = cardCount.ToString();
             cardCount++;
         }
-
         StartCoroutine(Frame());
-        
-        IEnumerator Frame()
+    }
+
+
+    public void DrawCard(int amount)
+    {
+        int cardCount = cards.Count;
+        List<Card> DrawCardList = new List<Card>();
+        for (int i = 0; i < amount; i++)
         {
-            yield return new WaitForSecondsRealtime(.1f);
-            for (int i = 0; i < cards.Count; i++)
-            {
-                if (cards[i].cardVisual != null)
-                    cards[i].cardVisual.UpdateIndex(transform.childCount);
-                //NOTE::设置卡牌图片索引为卡槽所在索引
-            }
+            Card card= Instantiate(slotPrefab, transform).GetComponentInChildren<Card>();
+            //NOTE::生成卡牌对象，卡牌槽和卡牌
+            //NOTE::排列由Horizontal Layout Group实现
+            DrawCardList.Add(card);
+        }
+
+        foreach (Card card in DrawCardList)
+        {
+           
+            card.PointerEnterEvent.AddListener(CardPointerEnter);//NOTE::鼠标进入事件
+            card.PointerExitEvent.AddListener(CardPointerExit);//NOTE::鼠标离开事件
+            card.BeginDragEvent.AddListener(BeginDrag);//NOTE::拖拽事件
+            card.EndDragEvent.AddListener(EndDrag);//NOTE::拖拽结束事件
+            card.name = cardCount.ToString();
+            cardCount++;
+        }
+
+        cards.AddRange(DrawCardList);
+        StartCoroutine(Frame());
+    }
+    IEnumerator Frame()
+    {
+        yield return new WaitForSecondsRealtime(.1f);
+        for (int i = 0; i < cards.Count; i++)
+        {
+            if (cards[i].cardVisual != null)
+                cards[i].cardVisual.UpdateIndex(transform.childCount);
+            //NOTE::设置卡牌图片索引为卡槽所在索引
         }
     }
     
-    
-    
-
     private void BeginDrag(Card card)
     {
         selectedCard = card;

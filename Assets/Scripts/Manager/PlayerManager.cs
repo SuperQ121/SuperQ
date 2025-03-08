@@ -7,6 +7,8 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
     public Player Player;
+    
+    public bool isDie=false;
     private void Awake()
     {
         if (instance == null)

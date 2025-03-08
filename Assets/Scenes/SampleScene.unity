@@ -1304,6 +1304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f88e3c3f73e64458569a4619472ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  darwCardAmount: 2
+  playerCardHolder: {fileID: 2132234465}
 --- !u!1 &1139313507
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,6 +2130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 501097316}
+  isDie: 0
 --- !u!1 &2132234463
 GameObject:
   m_ObjectHideFlags: 0

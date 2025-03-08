@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public int darwCardAmount;
+    public HorizontalCardHolder playerCardHolder;
+    
     private void Awake()
     {
         if (instance == null)
@@ -33,11 +36,37 @@ public class GameManager : MonoBehaviour
 
     public void NextRound()
     {
+        if (EnemyManager.instance.enemys.Count<=0)
+        {
+            return;
+        }
+        
         foreach (var enemy in EnemyManager.instance.enemys)
         {
             {
                 enemy.DoDamage();
             }
         }
+        DrawCard(darwCardAmount);
+    }
+
+    public void DrawCard(int amount)
+    {
+        if(playerCardHolder != null)
+            playerCardHolder.DrawCard(amount);
+    }
+
+    //NOTE::怪物死亡时判断使用
+    public void IfEndGame()
+    {
+        if (EnemyManager.instance.enemys.Count <= 0||PlayerManager.instance.isDie)
+        {
+            EndGame();
+        }
+    }
+
+    public void EndGame()
+    {
+        Debug.Log("Game Over");
     }
 }

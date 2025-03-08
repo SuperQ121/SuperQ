@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,5 +53,10 @@ public class Enemy : MonoBehaviour,IPointerDownHandler
     public void DoDamage()
     {
         PlayerManager.instance.Player.TakeDamage(stat.attackPower);
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.instance.IfEndGame();
     }
 }
