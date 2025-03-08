@@ -15,4 +15,5 @@ MonoBehaviour:
   cardName: 
   icon: {fileID: 0}
   cost: 0
-  cardId: 
+  cardId: 1
+  attackPower: 60

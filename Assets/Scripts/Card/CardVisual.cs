@@ -285,4 +285,9 @@ public class CardVisual : MonoBehaviour
         shadowCanvas.overrideSorting = false;
     }
 
+    //NOTE::销毁时终止该对象上的所有动画
+    void OnDestroy() {
+        
+        DOTween.KillAll(); 
+    }
 }

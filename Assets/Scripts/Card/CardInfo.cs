@@ -7,10 +7,16 @@ public class CardInfo :ScriptableObject
    public string cardName;
    public Sprite icon;
    public int cost;
-   public string cardId;
+   public uint cardId;
 
+   protected Card card;
    public virtual void CardFuction()
    {
       
+   }
+
+   public void SetTargetCard(Card _card)
+   {
+      card = _card;
    }
 }

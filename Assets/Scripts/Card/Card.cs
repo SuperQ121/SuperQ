@@ -23,7 +23,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     //NOTE::选择相关参数
     [Header("Selection")]
     public bool selected;//是否被选择
-    public float selectionOffset = 0;//选择后垂直偏移量
+    public float selectionOffset = 50;//选择后垂直偏移量
     private float pointerDownTime;//鼠标按下的时间
     private float pointerUpTime;//鼠标抬起的时间
 
@@ -64,6 +64,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         cardVisual = Instantiate(cardVisualPrefab, visualHandler ? visualHandler.transform : canvas.transform).GetComponent<CardVisual>();
         cardVisual.Initialize(this);
         cardGroup=transform.parent.parent.GetComponent<HorizontalCardHolder>();
+        
+        cardInfo.SetTargetCard(this);
     }
 
     
@@ -125,12 +127,18 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         }
 
         if (transform.position.x>useCardCheckPoint.position.x
-            && transform.position.y > useCardCheckPoint.position.y)
+            && transform.position.y > useCardCheckPoint.position.y
+            && EnemyManager.instance.targetEnemy!=null)
         {
             cardInfo.CardFuction();
-            Destroy(transform.parent.gameObject);
-            cardGroup.cards.Remove(this);
+            DestroyCard();
         }
+    }
+
+    public void DestroyCard()
+    {
+        cardGroup.cards.Remove(this);
+        Destroy(transform.parent.gameObject);
     }
 
     //NOTE::设置鼠标是否进入布尔值
@@ -180,10 +188,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         SelectEvent.Invoke(this, selected);
 
         //NOTE::如果物体被选中，将其位置向上偏移（selectionOffset）。如果物体未被选中，将其位置重置为 (0, 0, 0)。
-        /*if (selected)
+        if (selected)
             transform.localPosition += (cardVisual.transform.up * selectionOffset);
         else
-            transform.localPosition = Vector3.zero;*/
+            transform.localPosition = Vector3.zero;
     }
 
     //NOTE::卡牌位置上移

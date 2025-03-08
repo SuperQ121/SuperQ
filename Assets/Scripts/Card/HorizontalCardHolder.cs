@@ -78,12 +78,14 @@ public class HorizontalCardHolder : MonoBehaviour
 
         //NOTE::transform.DOLocalMove为DOTween插件里实现更好移动动画效果的函数
         if(card.transform.position.x<CardManager.instance.useCardCheckPoint.transform.position.x
-           || card.transform.position.y<CardManager.instance.useCardCheckPoint.transform.position.y)
+           || card.transform.position.y<CardManager.instance.useCardCheckPoint.transform.position.y
+           || EnemyManager.instance.targetEnemy==null)
         {
             selectedCard.transform.DOLocalMove(
                 selectedCard.selected ? new Vector3(0, selectedCard.selectionOffset, 0) : Vector3.zero,
                 tweenCardReturn ? .15f : 0).SetEase(Ease.OutBack);
         }
+        
         //NOTE::如果 selectedCard.selected 为 true，卡片会移动到 (0, selectionOffset, 0) 的位置。如果为 false，卡片会返回到原点 (0, 0, 0)。
         //NOTE::如果 tweenCardReturn 为 true，动画持续时间为 0.15 秒。如果为 false，动画瞬间完成（持续时间为 0）。
         
@@ -114,6 +116,7 @@ public class HorizontalCardHolder : MonoBehaviour
             {
                 Destroy(hoveredCard.transform.parent.gameObject);
                 cards.Remove(hoveredCard);
+                return;
             }
         }
 
