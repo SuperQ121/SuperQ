@@ -48,33 +48,30 @@ public class HorizontalCardHolder : MonoBehaviour
             cardCount++;
         }
         StartCoroutine(Frame());
+        CardManager.instance.cardCount -= cardsToSpawn;
     }
 
 
-    public void DrawCard(int amount)
+    public void DrawCard()
     {
         int cardCount = cards.Count;
-        List<Card> DrawCardList = new List<Card>();
-        for (int i = 0; i < amount; i++)
+        if(CardManager.instance.cardCount==0)
         {
-            Card card= Instantiate(slotPrefab, transform).GetComponentInChildren<Card>();
-            //NOTE::生成卡牌对象，卡牌槽和卡牌
-            //NOTE::排列由Horizontal Layout Group实现
-            DrawCardList.Add(card);
+            Debug.Log("NO more cards");
+            return;
         }
+        Card card= Instantiate(slotPrefab, transform).GetComponentInChildren<Card>();
+        //NOTE::生成卡牌对象，卡牌槽和卡牌
+        //NOTE::排列由Horizontal Layout Group实现
+        
+        card.PointerEnterEvent.AddListener(CardPointerEnter);//NOTE::鼠标进入事件
+        card.PointerExitEvent.AddListener(CardPointerExit);//NOTE::鼠标离开事件
+        card.BeginDragEvent.AddListener(BeginDrag);//NOTE::拖拽事件
+        card.EndDragEvent.AddListener(EndDrag);//NOTE::拖拽结束事件
+        card.name = cardCount.ToString();
+        cardCount++;
 
-        foreach (Card card in DrawCardList)
-        {
-           
-            card.PointerEnterEvent.AddListener(CardPointerEnter);//NOTE::鼠标进入事件
-            card.PointerExitEvent.AddListener(CardPointerExit);//NOTE::鼠标离开事件
-            card.BeginDragEvent.AddListener(BeginDrag);//NOTE::拖拽事件
-            card.EndDragEvent.AddListener(EndDrag);//NOTE::拖拽结束事件
-            card.name = cardCount.ToString();
-            cardCount++;
-        }
-
-        cards.AddRange(DrawCardList);
+        cards.Add(card);
         StartCoroutine(Frame());
     }
     IEnumerator Frame()

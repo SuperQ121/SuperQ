@@ -49,9 +49,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     void Start()
     {
+        cardInfo = CardManager.instance.GetRandomCardFormPlayerCards();
         canvas = GetComponentInParent<Canvas>();
         imageComponent = GetComponent<Image>();
-
+        
         useCardCheckPoint = CardManager.instance.useCardCheckPoint;
         //NOTE::是否已经初始化
         if (!instantiateVisual)
@@ -63,6 +64,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         //NOTE::生成卡牌图片放在VisualCardsHandler或画布节点下，同时获取CardVisual；在VisualCardsHandler节点下方便管理
         cardVisual = Instantiate(cardVisualPrefab, visualHandler ? visualHandler.transform : canvas.transform).GetComponent<CardVisual>();
         cardVisual.Initialize(this);
+        cardVisual.cardImage.sprite = cardInfo.sprite;
         cardGroup=transform.parent.parent.GetComponent<HorizontalCardHolder>();
         
         cardInfo.SetTargetCard(this);
@@ -183,15 +185,31 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (wasDragged)
             return;
 
+        SelectedCard();
+    }
+
+    public void SelectedCard()
+    {
         //NOTE::切换选中状态
         selected = !selected;
         SelectEvent.Invoke(this, selected);
 
         //NOTE::如果物体被选中，将其位置向上偏移（selectionOffset）。如果物体未被选中，将其位置重置为 (0, 0, 0)。
         if (selected)
+        {
+            GameManager.instance.selectedCards.Add(this);
+            GameManager.instance.showArtificeButton();
             transform.localPosition += (cardVisual.transform.up * selectionOffset);
+        }
         else
+        {
+            GameManager.instance.selectedCards.Remove(this);
+            if (GameManager.instance.selectedCards.Count==0)
+            {
+                GameManager.instance.hideArtificeButton();
+            }
             transform.localPosition = Vector3.zero;
+        }
     }
 
     //NOTE::卡牌位置上移
@@ -230,6 +248,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     private void OnDestroy()
     {
+        CardManager.instance.playerThrowCardGroup[cardInfo]++;
+        GameManager.instance.selectedCards.Remove(this);
+        if (GameManager.instance.selectedCards.Count==0)
+        {
+            GameManager.instance.hideArtificeButton();
+        }
         //NOTE::卡牌销毁的同时销毁卡牌图片
         if(cardVisual != null)
             Destroy(cardVisual.gameObject);

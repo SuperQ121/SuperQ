@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantiateVisual: 1
-  cardInfo: {fileID: 11400000, guid: 4222c4f9c78acde469413d390852cdde, type: 2}
+  cardInfo: {fileID: 0}
   moveSpeedLimit: 50
   selected: 0
   selectionOffset: 50

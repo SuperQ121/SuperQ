@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 public class CardVisual : MonoBehaviour
 {
     private bool initalize = false;
-
+    
     [Header("Card")]
     public Card parentCard;
     private Transform cardTransform;
@@ -26,7 +26,7 @@ public class CardVisual : MonoBehaviour
     private Canvas shadowCanvas;
     [SerializeField] private Transform shakeParent;
     [SerializeField] private Transform tiltParent;
-    [SerializeField] private Image cardImage;
+    public Image cardImage;
 
     //NOTE::跟随动画参数
     [Header("Follow Parameters")]

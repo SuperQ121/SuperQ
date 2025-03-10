@@ -45,7 +45,6 @@ public class Enemy : MonoBehaviour,IPointerDownHandler
         stat.currentHealth -= damage;
         if (stat.currentHealth <= 0)
         {
-            EnemyManager.instance.enemys.Remove(this);
             Destroy(gameObject);
         }
     }
@@ -57,6 +56,7 @@ public class Enemy : MonoBehaviour,IPointerDownHandler
 
     private void OnDestroy()
     {
+        EnemyManager.instance.enemys.Remove(this);
         GameManager.instance.IfEndGame();
     }
 }

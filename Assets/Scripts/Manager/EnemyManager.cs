@@ -45,6 +45,7 @@ public class EnemyManager : MonoBehaviour
             enemy.selectImage.SetActive(false);
             enemy.select = false;
         }
+        
         _enemy.selectImage.SetActive(true);
         _enemy.select = true;
     }
