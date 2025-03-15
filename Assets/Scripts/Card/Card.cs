@@ -14,7 +14,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private Vector3 offset;
     private HorizontalCardHolder cardGroup;//NOTE::卡牌所在卡牌区
     private Transform useCardCheckPoint;//NOTE::释放卡牌检测点
-    [SerializeField]private CardInfo cardInfo;//NOTE::卡牌相关的信息，图案，名称，功能等
+    public CardInfo cardInfo;//NOTE::卡牌相关的信息，图案，名称，功能等
+
+    public bool artificeRequired=false;//NOTE::是否为炼化需要的卡牌，方便炼化后销毁
     
     //NOTE::移动相关参数
     [Header("Movement")]
@@ -197,14 +199,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         //NOTE::如果物体被选中，将其位置向上偏移（selectionOffset）。如果物体未被选中，将其位置重置为 (0, 0, 0)。
         if (selected)
         {
-            GameManager.instance.selectedCards.Add(this);
+            CardManager.instance.selectedCards.Add(this);
             GameManager.instance.showArtificeButton();
             transform.localPosition += (cardVisual.transform.up * selectionOffset);
         }
         else
         {
-            GameManager.instance.selectedCards.Remove(this);
-            if (GameManager.instance.selectedCards.Count==0)
+            CardManager.instance.selectedCards.Remove(this);
+            if (CardManager.instance.selectedCards.Count==0)
             {
                 GameManager.instance.hideArtificeButton();
             }
@@ -248,9 +250,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     private void OnDestroy()
     {
+        CardManager.instance.currentCardCount--;
         CardManager.instance.playerThrowCardGroup[cardInfo]++;
-        GameManager.instance.selectedCards.Remove(this);
-        if (GameManager.instance.selectedCards.Count==0)
+        CardManager.instance.selectedCards.Remove(this);
+        if (CardManager.instance.selectedCards.Count==0)
         {
             GameManager.instance.hideArtificeButton();
         }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Card1_1
   m_EditorClassIdentifier: 
   cardName: 
-  sprite: {fileID: 21300000, guid: ca13ffcffe5587a489d8e58b19aa87be, type: 3}
+  sprite: {fileID: 21300000, guid: 929434819d4e28645a58941d1e124973, type: 3}
   cost: 0
-  cardId: 1
-  attackPower: 100
+  cardId: 101
+  attackPower: 1

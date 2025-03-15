@@ -36,7 +36,7 @@ public class CardVisual : MonoBehaviour
     [Header("Rotation Parameters")]
     [SerializeField] private float rotationAmount = 20;//旋转强度
     [SerializeField] private float rotationSpeed = 20;//旋转速度
-    [SerializeField] private float autoTiltAmount = 30;//自动旋转强度
+    //[SerializeField] private float autoTiltAmount = 30;//自动旋转强度
     [SerializeField] private float manualTiltAmount = 20;//鼠标拖动时倾斜的强度
     [SerializeField] private float tiltSpeed = 20;//鼠标拖动时倾斜的速度
 
@@ -164,9 +164,9 @@ public class CardVisual : MonoBehaviour
         //NOTE::如果卡片正在拖拽，保持 savedIndex 不变。如果没有拖拽，更新 savedIndex 为卡片在其父级中的索引（ParentIndex()）。这是为了在拖拽时保持倾斜效果的连续性。
         savedIndex = parentCard.isDragging ? savedIndex : parentCard.ParentIndex();
         
-        //NOTE::使用 Mathf.Sin 和 Mathf.Cos 生成正弦和余弦波形，用于实现自动倾斜效果。如果卡片处于鼠标进入（非拖动）状态（isHovering），将波形的振幅缩小到 0.2 倍，以实现更微妙的动态效果。
+        /*//NOTE::使用 Mathf.Sin 和 Mathf.Cos 生成正弦和余弦波形，用于实现自动倾斜效果。如果卡片处于鼠标进入（非拖动）状态（isHovering），将波形的振幅缩小到 0.2 倍，以实现更微妙的动态效果。
         float sine = Mathf.Sin(Time.time + savedIndex) * (parentCard.isHovering ? .2f : 1);
-        float cosine = Mathf.Cos(Time.time + savedIndex) * (parentCard.isHovering ? .2f : 1);
+        float cosine = Mathf.Cos(Time.time + savedIndex) * (parentCard.isHovering ? .2f : 1);*/
 
         //NOTE::计算鼠标位置与卡片位置的偏移量（offset）。如果卡片处于鼠标进入（非拖动）状态，根据偏移量动态调整 X 和 Y 轴的倾斜角度。
         //NOTE::tiltX：根据鼠标垂直偏移量调整 X 轴倾斜。tiltY：根据鼠标水平偏移量调整 Y 轴倾斜。manualTiltAmount：鼠标拖动时倾斜的强度。
@@ -178,8 +178,10 @@ public class CardVisual : MonoBehaviour
         float tiltZ = parentCard.isDragging ? tiltParent.eulerAngles.z : (curveRotationOffset * (curve.rotationInfluence * parentCard.SiblingAmount()));
 
         //NOTE::Mathf.LerpAngle 对倾斜角度进行平滑插值。
-        float lerpX = Mathf.LerpAngle(tiltParent.eulerAngles.x, tiltX + (sine * autoTiltAmount), tiltSpeed * Time.deltaTime);
-        float lerpY = Mathf.LerpAngle(tiltParent.eulerAngles.y, tiltY + (cosine * autoTiltAmount), tiltSpeed * Time.deltaTime);
+        /*float lerpX = Mathf.LerpAngle(tiltParent.eulerAngles.x, tiltX + (sine * autoTiltAmount), tiltSpeed * Time.deltaTime);
+        float lerpY = Mathf.LerpAngle(tiltParent.eulerAngles.y, tiltY + (cosine * autoTiltAmount), tiltSpeed * Time.deltaTime);*/
+        float lerpX = Mathf.LerpAngle(tiltParent.eulerAngles.x, tiltX , tiltSpeed * Time.deltaTime);
+        float lerpY = Mathf.LerpAngle(tiltParent.eulerAngles.y, tiltY , tiltSpeed * Time.deltaTime);
         float lerpZ = Mathf.LerpAngle(tiltParent.eulerAngles.z, tiltZ, tiltSpeed / 2 * Time.deltaTime);
 
         //NOTE::最终应用

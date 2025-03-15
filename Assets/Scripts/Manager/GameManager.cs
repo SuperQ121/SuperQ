@@ -2,21 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public int darwCardAmount;
+    
     public HorizontalCardHolder playerCardHolder;
 
     [Header("Artifice")] 
     public GameObject artificeParentNode;
     [SerializeField]private Button artificeBtn;
     [SerializeField]private Button cancelArtificeBtn;
-    public List<Card> selectedCards = new List<Card>();
     private void Awake()
     {
         if (instance == null)
@@ -33,6 +32,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         cancelArtificeBtn.onClick.AddListener(CancelArtificeBtnClicked);
+        artificeBtn.onClick.AddListener(ArtificeBtnClicked);
     }
 
     // Update is called once per frame
@@ -51,10 +51,10 @@ public class GameManager : MonoBehaviour
         foreach (var enemy in EnemyManager.instance.enemys)
         {
             {
-                enemy.DoDamage();
+                enemy.enemyInfo.SkillFuction();
             }
         }
-        DrawCard(darwCardAmount);
+        DrawCard(CardManager.instance.GetDarwCardAmount());
     }
 
     public void DrawCard(int amount)
@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
         if (remainingTimes <= 0) yield break;
         yield return new WaitForSeconds(0.1f);
         playerCardHolder.DrawCard();
+        CardManager.instance.currentCardCount++;
         if (CardManager.instance.cardCount>=1)
         {
             CardManager.instance.cardCount--;
@@ -110,15 +111,45 @@ public class GameManager : MonoBehaviour
     {
         List<Card> cards = new List<Card>();
 
-        cards.AddRange(selectedCards);
+        cards.AddRange(CardManager.instance.selectedCards);
         foreach (var card in cards)
         {
             card.SelectedCard();
         }
     }
-
+    
     public void ArtificeBtnClicked()
     {
-        Debug.Log("Artifice");
+        List<Card> selectedCards = new List<Card>();
+        selectedCards.AddRange(CardManager.instance.selectedCards);
+        
+        Dictionary<CardInfo,int> cardInfos = new Dictionary<CardInfo, int>();
+       cardInfos.AddRange(EnemyManager.instance.targetEnemy.enemyInfo.needCards);
+
+        foreach (var card in selectedCards)
+        {
+            if (cardInfos.ContainsKey(card.cardInfo))
+            {
+                cardInfos[card.cardInfo]--;
+                card.artificeRequired = true;
+                if (cardInfos[card.cardInfo] == 0)
+                {
+                    cardInfos.Remove(card.cardInfo);
+                }
+            }
+        }
+
+        if (cardInfos.Count == 0)
+        {
+            foreach (var card in selectedCards)
+            {
+                if (card.artificeRequired)
+                {
+                    card.DestroyCard();
+                }
+            }
+            CardManager.instance.AddCard(EnemyManager.instance.targetEnemy.enemyInfo.canGetCard);
+            EnemyManager.instance.targetEnemy.DestroySelf();
+        }
     }
 }

@@ -9,7 +9,7 @@ public class CharacterStat:MonoBehaviour
     public Stat armor;
     
     public int currentHealth;
-
+    public System.Action onHealthChanged;
     protected void Start()
     {
         currentHealth = maxHealth.GetValue();

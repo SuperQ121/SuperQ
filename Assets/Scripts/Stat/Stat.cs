@@ -36,4 +36,5 @@ public class Stat
     {
         modifiers.Remove(_modifier);
     }
+    
 }

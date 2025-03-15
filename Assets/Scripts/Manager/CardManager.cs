@@ -16,7 +16,12 @@ public class CardManager : MonoBehaviour
     
     public Dictionary<CardInfo,int> playerDrawCardGroup = new Dictionary<CardInfo, int>();
     public Dictionary<CardInfo,int> playerThrowCardGroup = new Dictionary<CardInfo, int>();
+    
+    public int cardsToSpawn;
+    public int currentCardCount;
     public int cardCount;
+    
+    [SerializeField]public List<Card> selectedCards = new List<Card>();
     
     private void Awake()
     {
@@ -32,6 +37,7 @@ public class CardManager : MonoBehaviour
 
     void Start()
     {
+        currentCardCount=cardsToSpawn;
         LoadCards();
     }
 
@@ -61,7 +67,7 @@ public class CardManager : MonoBehaviour
     public CardInfo GetRandomCardFormPlayerCards()
     {
         //NOTE::抽牌堆用完时将弃牌堆卡牌放入抽牌堆
-        if (playerDrawCardGroup.Count == 0 || cardCount< GameManager.instance.darwCardAmount)
+        if (playerDrawCardGroup.Count == 0 || playerDrawCardGroup.Count<GetDarwCardAmount())
         {
             if (playerDrawCardGroup == null || playerDrawCardGroup.Count == 0)
             {
@@ -113,5 +119,26 @@ public class CardManager : MonoBehaviour
         int randomIndex = UnityEngine.Random.Range(0, keys.Count);
         return keys[randomIndex];
     }
-    
+
+    public void AddCard(CardInfo cardInfo)
+    {
+        if (!playerCards.Contains(cardInfo))
+        {
+            playerCards.Add(cardInfo);
+        }
+
+        if (playerDrawCardGroup.ContainsKey(cardInfo))
+        {
+            playerDrawCardGroup[cardInfo]++;
+        }
+        else
+        {
+            playerDrawCardGroup.Add(cardInfo,1);
+        }
+    }
+
+    public int GetDarwCardAmount()
+    {
+        return cardsToSpawn-currentCardCount;
+    }
 }

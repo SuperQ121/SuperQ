@@ -18,7 +18,7 @@ public class HorizontalCardHolder : MonoBehaviour
     private RectTransform rect;
 
     [Header("Spawn Settings")]
-    [SerializeField] private int cardsToSpawn = 7;
+    private int cardsToSpawn ;
     public List<Card> cards;
 
     bool isCrossing = false;
@@ -26,6 +26,7 @@ public class HorizontalCardHolder : MonoBehaviour
 
     void Start()
     {
+        cardsToSpawn = CardManager.instance.cardsToSpawn;
         for (int i = 0; i < cardsToSpawn; i++)
         {
             Instantiate(slotPrefab, transform);
@@ -55,11 +56,6 @@ public class HorizontalCardHolder : MonoBehaviour
     public void DrawCard()
     {
         int cardCount = cards.Count;
-        if(CardManager.instance.cardCount==0)
-        {
-            Debug.Log("NO more cards");
-            return;
-        }
         Card card= Instantiate(slotPrefab, transform).GetComponentInChildren<Card>();
         //NOTE::生成卡牌对象，卡牌槽和卡牌
         //NOTE::排列由Horizontal Layout Group实现
