@@ -122,6 +122,7 @@ public class CardManager : MonoBehaviour
 
     public void AddCard(CardInfo cardInfo)
     {
+        
         if (!playerCards.Contains(cardInfo))
         {
             playerCards.Add(cardInfo);
@@ -134,6 +135,11 @@ public class CardManager : MonoBehaviour
         else
         {
             playerDrawCardGroup.Add(cardInfo,1);
+        }
+
+        if (!playerThrowCardGroup.ContainsKey(cardInfo))
+        {
+            playerThrowCardGroup.Add(cardInfo,0);
         }
     }
 
