@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     public PlayerStat stat;
     // Start is called before the first frame update
     void Start()
     {
-        
+        stat.player = this;
     }
 
     // Update is called once per frame
@@ -17,9 +17,9 @@ public class Player : MonoBehaviour
         
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage,Entity attacker)
     {
-        stat.currentHealth -= damage;
+        stat.TakeDamage(damage,attacker);
         
         if (stat.currentHealth <= 0)
         {
@@ -28,20 +28,6 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
             Debug.Log("玩家死亡");
         }
-        
-        if(stat.onHealthChanged!=null)
-            stat.onHealthChanged();
     }
-
-    public void Healing(int healing)
-    {
-        stat.currentHealth += healing;
-        if (stat.currentHealth> stat.maxHealth.GetValue())
-        {
-            stat.currentHealth = stat.maxHealth.GetValue();
-        }
-        
-        if(stat.onHealthChanged!=null)
-            stat.onHealthChanged();
-    }
+    
 }

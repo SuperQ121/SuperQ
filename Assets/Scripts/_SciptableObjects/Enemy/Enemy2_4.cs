@@ -7,6 +7,6 @@ public class Enemy2_4 : EnemyInfo
 {
     public override void SkillFuction()
     {
-        enemy.DoDamage(enemy.stat.attackPower);
+        
     }
 }

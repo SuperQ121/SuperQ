@@ -682,10 +682,13 @@ MonoBehaviour:
   maxHealth:
     baseValue: 20
     modifiers: 
-  armor:
+  armor: 0
+  currentHealth: 0
+  maxEnergy:
     baseValue: 0
     modifiers: 
-  currentHealth: 0
+  energy: 0
+  player: {fileID: 0}
 --- !u!1 &502243231
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,10 +1935,9 @@ MonoBehaviour:
   maxHealth:
     baseValue: 100
     modifiers: 
-  armor:
-    baseValue: 0
-    modifiers: 
+  armor: 0
   currentHealth: 0
+  enemy: {fileID: 0}
   attackPower: 10
 --- !u!114 &653296592
 MonoBehaviour:
@@ -3238,10 +3240,9 @@ MonoBehaviour:
   maxHealth:
     baseValue: 100
     modifiers: 
-  armor:
-    baseValue: 0
-    modifiers: 
+  armor: 0
   currentHealth: 0
+  enemy: {fileID: 0}
   attackPower: 10
 --- !u!114 &1023042137
 MonoBehaviour:
@@ -4781,10 +4782,9 @@ MonoBehaviour:
   maxHealth:
     baseValue: 100
     modifiers: 
-  armor:
-    baseValue: 0
-    modifiers: 
+  armor: 0
   currentHealth: 0
+  enemy: {fileID: 0}
   attackPower: 10
 --- !u!114 &1578254540
 MonoBehaviour:
@@ -7466,6 +7466,24 @@ MonoBehaviour:
   artificeParentNode: {fileID: 1865184980}
   artificeBtn: {fileID: 1616586762}
   cancelArtificeBtn: {fileID: 761686028}
+  playerBuffInfo:
+  - {fileID: 11400000, guid: 6271cfd7a6179bd48a48ad1fe3b2384f, type: 2}
+  - {fileID: 11400000, guid: adc7dfb8f866e814c8ca6889e85a8d24, type: 2}
+  - {fileID: 11400000, guid: 6500bc9c21d151c45938ebe62340b260, type: 2}
+  - {fileID: 11400000, guid: 4f467c89f45225b488589e99244fdc25, type: 2}
+  - {fileID: 11400000, guid: 7f1ee7ed197ff6947b61a349b76ebe91, type: 2}
+  - {fileID: 11400000, guid: 998ba39e07914b74ba4060c992c6e3c4, type: 2}
+  - {fileID: 11400000, guid: 08b7655cdbc2a324abc1daa33d3b66cb, type: 2}
+  - {fileID: 11400000, guid: 0490697207f3fc94b90a440c94fa9329, type: 2}
+  - {fileID: 11400000, guid: 3a99599d3ae448e4cae75af448c97a6d, type: 2}
+  playerBuffNeedExecuteEndRound: 
+  enemyBuffInfo:
+  - {fileID: 11400000, guid: 8f7e632bc85faa0419bccc34662257de, type: 2}
+  - {fileID: 11400000, guid: c6a15d4a2bba3e842867f0e3873001a6, type: 2}
+  - {fileID: 11400000, guid: f4b3552cf24d3ae468c475aaeb9fa122, type: 2}
+  - {fileID: 11400000, guid: 735955c17f5966940b06cdcb9edadb96, type: 2}
+  - {fileID: 11400000, guid: 4b03fcf57a017ca498f9971573e64314, type: 2}
+  enemyBuffNeedExecuteEndRound: 
 --- !u!224 &6816129634182018725
 RectTransform:
   m_ObjectHideFlags: 0

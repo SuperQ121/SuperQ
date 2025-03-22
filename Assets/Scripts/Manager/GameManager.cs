@@ -16,6 +16,13 @@ public class GameManager : MonoBehaviour
     public GameObject artificeParentNode;
     [SerializeField]private Button artificeBtn;
     [SerializeField]private Button cancelArtificeBtn;
+    
+    [Header("Buff Info")]
+    public List<BuffInfo> playerBuffInfo=new List<BuffInfo>();
+    public List<BuffType> playerBuffNeedExecuteEndRound = new List<BuffType>();
+    [Space(5)]
+    public List<BuffInfo> enemyBuffInfo=new List<BuffInfo>();
+    public List<BuffType> enemyBuffNeedExecuteEndRound=new List<BuffType>();
     private void Awake()
     {
         if (instance == null)
@@ -33,6 +40,23 @@ public class GameManager : MonoBehaviour
     {
         cancelArtificeBtn.onClick.AddListener(CancelArtificeBtnClicked);
         artificeBtn.onClick.AddListener(ArtificeBtnClicked);
+        LoadPlayerBuffNeedExecuteEndRound();
+        LoadEnemyBuffNeedExecuteEndRound();
+    }
+    
+    private void LoadPlayerBuffNeedExecuteEndRound()
+    {
+        playerBuffNeedExecuteEndRound.Add(BuffType._疗愈);
+        playerBuffNeedExecuteEndRound.Add(BuffType._护花);
+        playerBuffNeedExecuteEndRound.Add(BuffType._风伤);
+        playerBuffNeedExecuteEndRound.Add(BuffType._灼血);
+        playerBuffNeedExecuteEndRound.Add(BuffType._中毒);
+    }
+    private void LoadEnemyBuffNeedExecuteEndRound()
+    {
+        enemyBuffNeedExecuteEndRound.Add(BuffType._风伤);
+        enemyBuffNeedExecuteEndRound.Add(BuffType._灼血);
+        enemyBuffNeedExecuteEndRound.Add(BuffType._中毒);
     }
 
     // Update is called once per frame
@@ -47,15 +71,63 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        
+
+        if (PlayerManager.instance.player.stat.buffState.Count>0)
+        {
+            foreach (var buffType in PlayerManager.instance.player.stat.buffState)
+            {
+                if(playerBuffNeedExecuteEndRound.Contains(buffType.Key))
+                {
+                    PlayerManager.instance.player.stat.ExecuteBuffFunction(buffType.Key);
+                }
+            }
+        }
+
         foreach (var enemy in EnemyManager.instance.enemys)
+        {
+            if (enemy.stat.buffState.Count>0)
+            {
+                foreach (var buffType in enemy.stat.buffState)
+                {
+                    if (enemyBuffNeedExecuteEndRound.Contains(buffType.Key))
+                    {
+                        enemy.stat.ExecuteBuffFunction(buffType.Key);
+                    }
+                }
+            }
+        }
+
+        List<Enemy> enemys = new List<Enemy>();
+        enemys.AddRange(EnemyManager.instance.enemys);
+        
+        StartCoroutine(ExecuteEnemySkill(enemys,0.1f));
+        /*foreach (var enemy in EnemyManager.instance.enemys)
         {
             {
                 enemy.enemyInfo.SkillFuction();
             }
         }
-        DrawCard(CardManager.instance.GetDarwCardAmount());
+        DrawCard(CardManager.instance.GetDarwCardAmount());*/
+        
+        IEnumerator ExecuteEnemySkill(List<Enemy> enemys,float startTime)
+        {
+            if (startTime>0)
+            {
+                yield return new WaitForSeconds(startTime);
+            }
+            
+            if (enemys.Count == 0)
+            {
+                DrawCard(CardManager.instance.GetDarwCardAmount());
+                yield break;
+            }
+            enemys.First().enemyInfo.SkillFuction();
+            yield return new WaitForSeconds(0.1f);
+            enemys.Remove(enemys.First());
+            StartCoroutine(ExecuteEnemySkill(enemys,0));
+        }
     }
+   
 
     public void DrawCard(int amount)
     {

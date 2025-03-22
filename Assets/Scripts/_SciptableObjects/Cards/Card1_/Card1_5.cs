@@ -6,9 +6,10 @@ using UnityEngine;
 public class Card1_5 : CardInfo
 {
     public int healingAmount;
-    public override void CardFuction()
+    public override bool CardFuction()
     {
-        PlayerManager.instance.player.Healing(healingAmount);
+        PlayerManager.instance.player.stat.Healing(healingAmount);
+        return true;
     }
 }
 

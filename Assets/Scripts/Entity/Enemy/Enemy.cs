@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-public class Enemy : MonoBehaviour,IPointerDownHandler
+public class Enemy : Entity,IPointerDownHandler
 {
     public EnemyInfo enemyInfo;
     public EnemyStat stat;
@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour,IPointerDownHandler
         enemyInfo.enemy = this;
         stat.maxHealth.SetDefaultValue(enemyInfo.maxHealth);
         stat.attackPower = enemyInfo.attackPower;
+        stat.enemy = this;
     }
 
     void Start()
@@ -52,10 +53,9 @@ public class Enemy : MonoBehaviour,IPointerDownHandler
         EnemyManager.instance.SetTargetEnemy(this, stat);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage,Entity attacker)
     {
-        stat.currentHealth -= damage;
-        stat.onHealthChanged?.Invoke();
+        stat.TakeDamage(damage,attacker);
         if (stat.currentHealth <= 0)
         {
             Destroy(gameObject);
@@ -67,10 +67,19 @@ public class Enemy : MonoBehaviour,IPointerDownHandler
         Destroy(gameObject);
     }
 
-    public void DoDamage(int damage)
+    public void DoDamage(int damage,Entity attacker)
     {
+        if(stat.buffState.ContainsKey(BuffType._热浪))
+        {
+            _热浪Info buffInfo = stat.buffInfos[5] as _热浪Info;
+            if(buffInfo != null)
+            {
+                damage -= buffInfo.reduceAttackPower;
+            }
+            stat.ExecuteBuffFunction(BuffType._热浪);
+        }
         
-        PlayerManager.instance.player.TakeDamage(damage);
+        PlayerManager.instance.player.TakeDamage(damage,attacker);
     }
 
     private void OnDestroy()

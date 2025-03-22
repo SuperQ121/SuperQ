@@ -134,8 +134,15 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             && transform.position.y > useCardCheckPoint.position.y
             && EnemyManager.instance.targetEnemy!=null)
         {
-            cardInfo.CardFuction();
-            DestroyCard();
+            bool hasExecute=cardInfo.CardFuction();
+            if (hasExecute)
+            {
+                DestroyCard();
+            }
+            else
+            {
+                GameManager.instance.playerCardHolder.ReturnOriginPosition(this);
+            }
         }
     }
 

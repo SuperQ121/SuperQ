@@ -6,12 +6,13 @@ using UnityEngine;
 public class Card1_4 : CardInfo
 {
     public int attackPower;
-    public override void CardFuction()
+    public override bool CardFuction()
     {
       
         if(EnemyManager.instance.targetEnemy!=null)
         {
-            EnemyManager.instance.targetEnemy.TakeDamage(attackPower);
+            
         }
+        return true;
     }
 }
