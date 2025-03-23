@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13a5f3543f37bb4a996cb4896011611, type: 3}
+  m_Name: Card3_1
+  m_EditorClassIdentifier: 
+  canRecycle: 1
+  description: "\u79FB\u9664\u4E00\u5C42\u81EA\u8EAB\u9664\"\u7D0A\u4E71\"\u5916\u6240\u6709\u8D1F\u9762\u6548\u679C\uFF1B\u83B7\u5F971\u5C42\"\u7D0A\u4E71\"\u3002"
+  cardId: 21
+  type: 64
+  cardName: "\u53CD"
+  sprite: {fileID: 0}
+  costEnergy: 0
+  recycleEnergy: 0
+  reduceLayers: 1
+  addLayers: 1

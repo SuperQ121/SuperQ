@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: "\u8FF7\u6C99"
   m_EditorClassIdentifier: 
   buffID: 6
+  buffType: 32
   armorDamageMultiplier: 2

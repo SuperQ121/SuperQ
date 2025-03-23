@@ -15,6 +15,8 @@ public class CharacterStat:MonoBehaviour
     public Dictionary<BuffType,int> buffState = new Dictionary<BuffType,int>();//NOTE::类型，层数
     public Dictionary<BuffType,Action> buffActions = new Dictionary<BuffType, Action>();//NOTE::类型，函数
     public Dictionary<int,BuffInfo> buffInfos = new Dictionary<int,BuffInfo>();//NOTE::buff ID,buff信息
+
+    public bool jumpRound=false;
     protected virtual void Start()
     {
         currentHealth = maxHealth.GetValue();
@@ -87,6 +89,7 @@ public class CharacterStat:MonoBehaviour
         }
         onHealthChanged?.Invoke();
     }
+    
 
     public virtual void TakeDamage(int amount, Entity attacker)
     {
@@ -145,7 +148,7 @@ public class CharacterStat:MonoBehaviour
         onHealthChanged?.Invoke();
     }
 
-    protected void ReduceBuffLayers(BuffType type)
+    public void ReduceBuffLayers(BuffType type,int amount=1)
     {
         buffState[type]--;
         if (buffState[type] <= 0)

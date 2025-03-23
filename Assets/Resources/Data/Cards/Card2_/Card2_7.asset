@@ -9,11 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3481e864043e03d43a6b918c3816bb63, type: 3}
-  m_Name: Card1_1
+  m_Script: {fileID: 11500000, guid: 90ad7041d5326e74f88cb5cdc41e2d66, type: 3}
+  m_Name: Card2_7
   m_EditorClassIdentifier: 
-  cardName: 
-  sprite: {fileID: 21300000, guid: 929434819d4e28645a58941d1e124973, type: 3}
-  cost: 0
-  cardId: 101
-  attackPower: 1
+  canRecycle: 1
+  description: "\u56DE\u590D\u4E09\u70B9\u8840\u91CF"
+  cardId: 17
+  type: 4
+  cardName: "\u878D\u6C34"
+  sprite: {fileID: 0}
+  costEnergy: 0
+  recycleEnergy: 0
+  healingHealth: 3

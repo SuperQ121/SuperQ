@@ -6,4 +6,5 @@ using UnityEngine.Serialization;
 public class BuffInfo :ScriptableObject
 {
     public int buffID;
+    public BuffType buffType;
 }

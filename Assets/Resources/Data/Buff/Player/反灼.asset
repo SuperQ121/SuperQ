@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: "\u53CD\u707C"
   m_EditorClassIdentifier: 
   buffID: 3
+  buffType: 4
   reverseDamage: 1

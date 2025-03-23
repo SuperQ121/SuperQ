@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 164bbc80841351f40a8dfa46aad253e5, type: 3}
-  m_Name: Card1_3
+  m_Script: {fileID: 11500000, guid: bd0ee23f6a813f34d807d7ec949eead6, type: 3}
+  m_Name: "\u571F"
   m_EditorClassIdentifier: 
-  cardName: 
+  description: "\u589E\u52A0\u4E00\u70B9\u62A4\u76FE"
+  cardId: 4
+  type: 16
+  cardName: "\u571F"
   sprite: {fileID: 0}
-  cost: 0
-  cardId: 103
-  attackPower: 1
+  costEnergy: 1
+  recycleEnergy: 1
+  addArmor: 1

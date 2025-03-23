@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CardInfo", menuName = "Data/CardInfo1_/Card1_7",order = 7)]
-public class Card1_7 : CardInfo
+[CreateAssetMenu(fileName = "Card1_7", menuName = "Data/CardInfo1_/Card1_7",order = 7)]
+public class Card1_7 : CraftCardInfo
 {
-    public int attackPower;
+    public int addBuffLayer;
     public override bool CardFuction()
     {
       
-        if(EnemyManager.instance.targetEnemy!=null)
-        {
-            
-        }
+        bool baseResult= base.CardFuction();
 
-        return true;
+        if (baseResult)
+        {
+            PlayerManager.instance.player.stat.AddBufflayers(BuffType._热浪,addBuffLayer);
+            return true;
+        }
+        else
+        { 
+            return false;
+        }
     }
 }
 

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7898672264905f44096c6ae100525e33, type: 3}
+  m_Name: Card2_8
+  m_EditorClassIdentifier: 
+  canRecycle: 1
+  description: "\u56DE\u590D\u4E24\u70B9\u8840\u91CF\u6216\u5BF9\u654C\u4EBA\u9020\u6210\u4E09\u5C42'\u4E2D\u6BD2'"
+  cardId: 18
+  type: 4
+  cardName: "\u8403\u6BD2"
+  sprite: {fileID: 0}
+  costEnergy: 3
+  recycleEnergy: 3
+  useToSelf: 0
+  useToEnemy: 0
+  healingHealth: 2
+  addLayers: 3

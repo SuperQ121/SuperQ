@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fcd2d0230398e42a1ea59bf637ab8c, type: 3}
   m_Name: Card1_6
   m_EditorClassIdentifier: 
-  cardName: 
+  description: "\u83B7\u5F97\u4E00\u5C42\u2018\u7597\u6108\u2019"
+  cardId: 6
+  type: 2
+  cardName: "\u6C34\u6D41"
   sprite: {fileID: 0}
-  cost: 0
-  cardId: 106
-  attackPower: 1
+  costEnergy: 0
+  recycleEnergy: 3
+  craftNeedCards:
+  - {fileID: 11400000, guid: 4222c4f9c78acde469413d390852cdde, type: 2}
+  - {fileID: 11400000, guid: c21b66e747846674dbebc3a42da922c8, type: 2}
+  addBuffLayer: 1

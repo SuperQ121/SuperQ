@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: "\u7D0A\u4E71"
   m_EditorClassIdentifier: 
   buffID: 9
+  buffType: 256
   addEnergyCost: 2

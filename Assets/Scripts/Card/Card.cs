@@ -130,14 +130,44 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             wasDragged = false;
         }
 
+        //NOTE::卡牌对敌人执行区域
         if (transform.position.x>useCardCheckPoint.position.x
             && transform.position.y > useCardCheckPoint.position.y
             && EnemyManager.instance.targetEnemy!=null)
         {
+
+            if ((cardInfo as CanSelfUseCardInfo)!=null)
+            {
+                (cardInfo as CanSelfUseCardInfo).useToEnemy=true;
+            }
+            
             bool hasExecute=cardInfo.CardFuction();
             if (hasExecute)
             {
                 DestroyCard();
+            }
+            else
+            {
+                GameManager.instance.playerCardHolder.ReturnOriginPosition(this);
+            }
+        }
+        //NOTE::卡牌对自己执行区域
+        else if(transform.position.x<useCardCheckPoint.position.x
+                && transform.position.y > useCardCheckPoint.position.y)
+        {
+            if ((cardInfo as CanSelfUseCardInfo)!=null)
+            {
+                (cardInfo as CanSelfUseCardInfo).useToSelf=true;
+                
+                bool hasExecute=cardInfo.CardFuction();
+                if (hasExecute)
+                {
+                    DestroyCard();
+                }
+                else
+                {
+                    GameManager.instance.playerCardHolder.ReturnOriginPosition(this);
+                }
             }
             else
             {
@@ -207,7 +237,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (selected)
         {
             CardManager.instance.selectedCards.Add(this);
-            GameManager.instance.showArtificeButton();
+            GameManager.instance.ShowButton();
             transform.localPosition += (cardVisual.transform.up * selectionOffset);
         }
         else
@@ -215,7 +245,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             CardManager.instance.selectedCards.Remove(this);
             if (CardManager.instance.selectedCards.Count==0)
             {
-                GameManager.instance.hideArtificeButton();
+                GameManager.instance.HideButton();
             }
             transform.localPosition = Vector3.zero;
         }
@@ -262,7 +292,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         CardManager.instance.selectedCards.Remove(this);
         if (CardManager.instance.selectedCards.Count==0)
         {
-            GameManager.instance.hideArtificeButton();
+            GameManager.instance.HideButton();
         }
         //NOTE::卡牌销毁的同时销毁卡牌图片
         if(cardVisual != null)

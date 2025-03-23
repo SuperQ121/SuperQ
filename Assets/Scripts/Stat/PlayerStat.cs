@@ -3,17 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerStat : CharacterStat
 {
    public Stat maxEnergy;
-   public int energy;
+   public int currentEnergy;
    public Player player;
 
    protected override void Start()
    {
       base.Start();
       LoadBuffInfo();
+      currentEnergy=maxEnergy.GetValue();
    }
 
    protected override void AddBuffAction()
@@ -146,10 +148,10 @@ public class PlayerStat : CharacterStat
 
    public void AddEnergy(int amount)
    {
-      energy += amount;
-      if (energy>maxEnergy.GetValue())
+      currentEnergy += amount;
+      if (currentEnergy>maxEnergy.GetValue())
       {
-         energy = maxEnergy.GetValue();
+         currentEnergy = maxEnergy.GetValue();
       }
    }
 

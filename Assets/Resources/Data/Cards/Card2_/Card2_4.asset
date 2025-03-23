@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b515c8a1ccb62f94e9beb41baae6d72a, type: 3}
   m_Name: Card2_4
   m_EditorClassIdentifier: 
-  cardName: 
+  description: "\u83B7\u5F97\u4E09\u70B9\u62A4\u76FE"
+  cardId: 14
+  type: 16
+  cardName: "\u571F\u5899"
   sprite: {fileID: 0}
-  cost: 0
-  cardId: 204
+  costEnergy: 0
+  recycleEnergy: 3
+  craftNeedCards:
+  - {fileID: 11400000, guid: 34ee7a873f44fc04190d9bda3eadb084, type: 2}
+  - {fileID: 11400000, guid: 34ee7a873f44fc04190d9bda3eadb084, type: 2}
+  addArmor: 3

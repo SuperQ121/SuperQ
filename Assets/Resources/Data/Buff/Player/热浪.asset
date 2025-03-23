@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: "\u70ED\u6D6A"
   m_EditorClassIdentifier: 
   buffID: 5
+  buffType: 16
   reduceAttackPower: 2

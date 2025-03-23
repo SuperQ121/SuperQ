@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b335e72b90a9d64683819f32438f93d, type: 3}
   m_Name: Card2_3
   m_EditorClassIdentifier: 
-  cardName: 
+  description: "\u9020\u6210\u4E5D\u70B9\u4F24\u5BB3"
+  cardId: 13
+  type: 8
+  cardName: "\u711A\u706B"
   sprite: {fileID: 0}
-  cost: 0
-  cardId: 203
+  costEnergy: 4
+  recycleEnergy: 0
+  craftNeedCards:
+  - {fileID: 11400000, guid: a585f1530ecbb874fadad58aff1a2b3d, type: 2}
+  - {fileID: 11400000, guid: a585f1530ecbb874fadad58aff1a2b3d, type: 2}
+  - {fileID: 11400000, guid: a585f1530ecbb874fadad58aff1a2b3d, type: 2}
+  damage: 9

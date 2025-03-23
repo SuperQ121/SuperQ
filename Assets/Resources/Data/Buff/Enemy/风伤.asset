@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: "\u98CE\u4F24"
   m_EditorClassIdentifier: 
   buffID: 4
+  buffType: 8
   damage: 1

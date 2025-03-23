@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -13,11 +14,16 @@ public class GameManager : MonoBehaviour
     public HorizontalCardHolder playerCardHolder;
 
     [Header("Artifice")] 
-    public GameObject artificeParentNode;
+    public GameObject buttonParentNode;
     [SerializeField]private Button artificeBtn;
     [SerializeField]private Button cancelArtificeBtn;
     
+    [Header("Recycle")]
+    [SerializeField]private Button recycleBtn;
+    
     [Header("Buff Info")]
+    public List<BuffType> debuffList = new List<BuffType>();
+    
     public List<BuffInfo> playerBuffInfo=new List<BuffInfo>();
     public List<BuffType> playerBuffNeedExecuteEndRound = new List<BuffType>();
     [Space(5)]
@@ -40,6 +46,7 @@ public class GameManager : MonoBehaviour
     {
         cancelArtificeBtn.onClick.AddListener(CancelArtificeBtnClicked);
         artificeBtn.onClick.AddListener(ArtificeBtnClicked);
+        recycleBtn.onClick.AddListener(RecycleBtnClicked);
         LoadPlayerBuffNeedExecuteEndRound();
         LoadEnemyBuffNeedExecuteEndRound();
     }
@@ -121,7 +128,14 @@ public class GameManager : MonoBehaviour
                 DrawCard(CardManager.instance.GetDarwCardAmount());
                 yield break;
             }
-            enemys.First().enemyInfo.SkillFuction();
+            if(!enemys.First().stat.jumpRound)
+            {
+                enemys.First().enemyInfo.SkillFuction();
+            }
+            else
+            {
+                enemys.First().stat.jumpRound=false;
+            }
             yield return new WaitForSeconds(0.1f);
             enemys.Remove(enemys.First());
             StartCoroutine(ExecuteEnemySkill(enemys,0));
@@ -169,14 +183,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over");
     }
 
-    public void showArtificeButton()
+    public void ShowButton()
     {
-        artificeParentNode.SetActive(true);
+        buttonParentNode.SetActive(true);
     }
 
-    public void hideArtificeButton()
+    public void HideButton()
     {
-        artificeParentNode.SetActive(false);
+        buttonParentNode.SetActive(false);
     }
 
     public void CancelArtificeBtnClicked()
@@ -222,6 +236,18 @@ public class GameManager : MonoBehaviour
             }
             CardManager.instance.AddCard(EnemyManager.instance.targetEnemy.enemyInfo.canGetCard);
             EnemyManager.instance.targetEnemy.DestroySelf();
+        }
+    }
+
+    public void RecycleBtnClicked()
+    {
+        foreach (var card in CardManager.instance.selectedCards)
+        {
+            if (card.cardInfo.canRecycle)
+            {
+                PlayerManager.instance.player.stat.AddEnergy(card.cardInfo.recycleEnergy);
+                card.DestroyCard();
+            }
         }
     }
 }

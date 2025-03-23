@@ -2,18 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CardInfo", menuName = "Data/CardInfo1_/Card1_2",order = 2)]
+[CreateAssetMenu(fileName = "Card1_2", menuName = "Data/CardInfo1_/Card1_2",order = 2)]
 public class Card1_2 : CardInfo
 {
-   public int attackPower;
+   public int healingHealth;
+   public int addEnergy;
    public override bool CardFuction()
    {
       
-      if(EnemyManager.instance.targetEnemy!=null)
+      bool baseResult= base.CardFuction();
+
+      if (baseResult)
       {
-        
+         PlayerManager.instance.player.stat.Healing(healingHealth);
+         PlayerManager.instance.player.stat.AddEnergy(addEnergy);
+         return true;
       }
-      return true;
+      else
+      {
+         return false;
+      }
    }
 }
 
